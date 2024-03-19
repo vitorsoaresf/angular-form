@@ -17,12 +17,15 @@ export class RegisterFormComponent {
   registerForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.min(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.min(8)]),
+    password: new FormControl('', [Validators.required, Validators.min(8)]),
   });
 
   onSubmit() {
-    console.log(this.registerForm.status);
-
-    this.registerForm.reset();
+    if (this.registerForm.status === 'VALID') {
+      console.log(this.registerForm.value);
+      this.registerForm.reset({ password: '' });
+    } else {
+      alert('Dados informados inválido, preencha os campos corretamente');
+    }
   }
 }
